@@ -60,21 +60,13 @@ class Login {
     }
 
     updatePassword(user, oldPassword, newPassword) {
-        // First we check if the user exists
-        let user1 = '';
-        for (let i of this.users) {
-            if (i === user) {
-                user1 = user;
+        let idx = this.idxUserArray(user);
+        //user exists
+        if (idx >= 0) {
+            if (this.users[idx].password === oldPassword) {
+                this.users[idx].password = newPassword;
             }
         }
-        if (user1 === user) {
-            let index = this.idx(user, this.users);
-            if (this.passwords[index] === oldPassword) {
-                this.passwords[index] = newPassword;
-                return true;
-            }
-        }
-        return false;
     }
 
     login(user, password) {
@@ -105,6 +97,31 @@ class Login {
         }
         return -1;
     }
+
+
+    // Gets index of an element in users
+    // return -1 if the elements isn't in the array 
+    idxUserArray(element) {
+        let cont = 0;
+        for (let i of this.users) {
+            if (i.user === element) {
+                return cont;
+            }
+            cont += 1;
+        }
+        return -1;
+    }
+
+
+    updatePassword(user, oldPassword, newPassword) {
+        let idx = this.idxUserArray(user);
+        //user exists
+        if (idx >= 0) {
+            if (this.users[idx].password === oldPassword) {
+                this.users[idx].password = newPassword;
+            }
+        }
+    }
 }
 
 let registeredUsers = {
@@ -130,4 +147,5 @@ login.logout('user2');
 login.removeUser('user4');
 console.log(login.sessions);
 console.log('-----------------------------------------  users');
+login.updatePassword('user3', 'p2ass3', 'feedback')
 console.log(login.users);
