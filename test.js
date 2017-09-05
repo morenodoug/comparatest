@@ -68,13 +68,24 @@ class Login {
     }
 
     login(user, password) {
-        let index = this.idx(user, this.users);
-        if (this.passwords[index] === password) {
-            this.sessions.push(user);
+
+        if (this.idx(user, this.sessions) < 0) {
+
+            for (let a = 0; a < this.users.length; a++) {
+                if (this.users[a].user === user && this.users[a].password === password) {
+                    this.sessions.push(user);
+                    break;
+                }
+            }
+
         }
+
+
     }
 
+
     // Gets index of an element in an array
+    //return -1 si el elemento no se encuentra en el array
     idx(element, array) {
         let cont = 0;
         for (let i of array) {
@@ -83,7 +94,7 @@ class Login {
             }
             cont += 1;
         }
-        return cont;
+        return -1;
     }
 }
 
@@ -94,10 +105,14 @@ let registeredUsers = {
 };
 
 let login = new Login(registeredUsers);
-
+console.log(login.users);
 login.registerUser('user4', 'pass4');
 login.login('user4', 'pass4');
+login.login('user4', 'pass4');
+login.login('user1', 'pass1');
+login.login('user1', 'pass1');
 login.updatePassword('user3', 'pass3', 'pass5');
 login.login('user3', 'pass5');
-login.logout('user4');
+
 login.logout('user3');
+console.log(login.sessions);
