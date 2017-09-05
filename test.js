@@ -36,18 +36,18 @@ class Login {
     }
 
     removeUser(user) {
-        for (let a = 0; a < this.users.length; a++) {
-            if (user === this.users[a].user) {
-                this.logout(user);
-                this.users.forEach((userForEach, i) => {
-                    if (userForEach.user === user) {
-                        this.users[i] = null;
-                    }
+        let userIdx = this.idxUserArray(user);
 
-                });
+        if (user === this.users[userIdx].user) {
+            this.logout(user);
+            this.users.forEach((userForEach, i) => {
+                if (userForEach.user === user) {
+                    this.users[i] = null;
+                }
 
-            }
+            });
         }
+
         this.users = this.users.filter(user => user !== null);
 
     }
@@ -125,6 +125,7 @@ let login = new Login(registeredUsers);
 // console.log(login.users);
 login.registerUser('user4', 'pass4');
 login.registerUser('user4', 'pass4');
+
 
 login.login('user4', 'pass4');
 login.login('user4', 'pass4');
