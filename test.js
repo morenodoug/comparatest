@@ -36,12 +36,22 @@ class Login {
     }
 
     removeUser(user) {
-        let index = this.idx(user, this.users);
-        this.users[index] = null;
-        this.passwords[index] = null;
+        for (let a = 0; a < this.users.length; a++) {
+            if (user === this.users[a].user) {
+                this.logout(user);
+                this.users.forEach((userForEach, i) => {
+                    if (userForEach.user === user) {
+                        this.users[i] = null;
+                    }
+
+                });
+
+            }
+        }
         this.users = this.users.filter(user => user !== null);
-        this.passwords = this.passwords.filter(password => password !== null);
+
     }
+
 
     checkPassword(user, password) {
         let index = this.idx(user, this.users);
@@ -80,7 +90,6 @@ class Login {
 
         }
 
-
     }
 
 
@@ -105,14 +114,20 @@ let registeredUsers = {
 };
 
 let login = new Login(registeredUsers);
-console.log(login.users);
+// console.log(login.users);
 login.registerUser('user4', 'pass4');
-login.login('user4', 'pass4');
-login.login('user4', 'pass4');
-login.login('user1', 'pass1');
-login.login('user1', 'pass1');
-login.updatePassword('user3', 'pass3', 'pass5');
-login.login('user3', 'pass5');
+login.registerUser('user4', 'pass4');
 
-login.logout('user3');
+login.login('user4', 'pass4');
+login.login('user4', 'pass4');
+login.login('user1', 'pass1');
+login.login('user2', 'pass2');
+
+login.login('user3', 'pass3');
 console.log(login.sessions);
+console.log('-----------------------------------------sessions');
+login.logout('user2');
+login.removeUser('user4');
+console.log(login.sessions);
+console.log('-----------------------------------------  users');
+console.log(login.users);
