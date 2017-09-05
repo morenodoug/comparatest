@@ -1,13 +1,10 @@
 // This class is used for logins
 class Login {
     constructor(hash) {
-        this.sessions = [];
         this.users = [];
-        this.passwords = [];
-        Object.keys(hash).map(k => ({ k, v: hash[k] })).map(e => {
-            this.users = this.users.concat([e.k]);
-            this.passwords = this.passwords.concat([e.v]);
-        });
+        this.sessions = [];
+
+        this.users = Object.keys(hash).map((user) => ({ user, password: hash[user] }));
     }
 
     logout(user) {
