@@ -53,11 +53,6 @@ class Login {
     }
 
 
-    checkPassword(user, password) {
-        let index = this.idx(user, this.users);
-        let passwordCorrect = this.passwords[index] === password;
-        return passwordCorrect;
-    }
 
     updatePassword(user, oldPassword, newPassword) {
         let idx = this.idxUserArray(user);
@@ -73,15 +68,11 @@ class Login {
 
         if (this.idx(user, this.sessions) < 0) {
 
-            for (let a = 0; a < this.users.length; a++) {
-                if (this.users[a].user === user && this.users[a].password === password) {
-                    this.sessions.push(user);
-                    break;
-                }
+            let userIdx = this.idxUserArray(user);
+            if (this.users[userIdx].user === user && this.users[userIdx].password === password) {
+                this.sessions.push(user);
             }
-
         }
-
     }
 
 
